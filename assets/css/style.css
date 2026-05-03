@@ -1,0 +1,441 @@
+/* ============================================================
+   PharmaCare PMS - Stylesheet
+   Developed by: Md Shamim Hossain Ridoy | Developer Portfolio
+   ============================================================ */
+
+:root {
+    --sidebar-w: 260px;
+    --topbar-h: 60px;
+    --primary: #1a6b3c;
+    --primary-dark: #124d2c;
+    --primary-light: #e8f5ee;
+    --accent: #f0a500;
+    --accent-light: #fff8e6;
+    --danger: #e63946;
+    --warning: #f4a261;
+    --info: #2176ae;
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --text: #1a1f2e;
+    --text-muted: #6b7280;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: linear-gradient(175deg, #0d3d22 0%, #1a6b3c 60%, #1d7a44 100%);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: transform .3s ease;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.15) transparent;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.brand-icon {
+    width: 42px; height: 42px;
+    background: var(--accent);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff;
+}
+
+.brand-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px; font-weight: 700;
+    color: #fff; letter-spacing: .5px;
+}
+
+.brand-sub { font-size: 11px; color: rgba(255,255,255,.5); }
+
+.sidebar-nav { flex: 1; padding: 12px 12px; }
+
+.nav-section-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,.35);
+    padding: 14px 8px 6px;
+}
+
+.nav-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: var(--radius-sm);
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: 13.5px; font-weight: 500;
+    transition: all .2s;
+    margin-bottom: 2px;
+}
+
+.nav-link:hover { background: rgba(255,255,255,.12); color: #fff; }
+.nav-link.active { background: var(--accent); color: #fff; font-weight: 600; }
+.nav-link i { font-size: 16px; width: 20px; text-align: center; }
+
+.sidebar-footer {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; gap: 10px;
+}
+
+.user-avatar {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+    flex-shrink: 0;
+}
+
+.user-info { flex: 1; min-width: 0; }
+.user-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-role { font-size: 11px; color: rgba(255,255,255,.5); }
+
+.btn-logout {
+    color: rgba(255,255,255,.6);
+    font-size: 18px;
+    text-decoration: none;
+    transition: color .2s;
+}
+.btn-logout:hover { color: var(--accent); }
+
+/* ---- MAIN ---- */
+.main-content {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    transition: margin .3s;
+}
+
+/* ---- TOPBAR ---- */
+.topbar {
+    height: var(--topbar-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 24px; gap: 16px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: var(--shadow);
+}
+
+.btn-toggle-sidebar {
+    background: none; border: none;
+    font-size: 22px; color: var(--text-muted);
+    cursor: pointer; padding: 4px;
+    display: flex; align-items: center;
+    transition: color .2s;
+}
+.btn-toggle-sidebar:hover { color: var(--primary); }
+
+.topbar-title {
+    font-size: 16px; font-weight: 700;
+    color: var(--text); flex: 1;
+    text-transform: capitalize;
+}
+
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+
+.badge-role {
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    background: var(--primary-light); color: var(--primary);
+    text-transform: uppercase; letter-spacing: .5px;
+}
+
+.topbar-time {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; color: var(--text-muted);
+}
+
+/* ---- PAGE BODY ---- */
+.page-body {
+    flex: 1; padding: 24px;
+    max-width: 1400px;
+}
+
+/* ---- CARDS ---- */
+.card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background: var(--surface);
+}
+
+.card-header {
+    background: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; gap: 8px;
+}
+
+/* ---- STAT CARDS ---- */
+.stat-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--primary));
+}
+
+.stat-icon {
+    width: 46px; height: 46px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: var(--card-bg, var(--primary-light));
+    color: var(--card-color, var(--primary));
+}
+
+.stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px; font-weight: 700;
+    color: var(--text); margin: 8px 0 2px;
+}
+
+.stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+.stat-change { font-size: 12px; margin-top: 6px; }
+
+/* ---- TABLES ---- */
+.table-wrapper {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.table { margin: 0; }
+
+.table thead th {
+    background: #f8fafc;
+    font-size: 11.5px; font-weight: 700;
+    letter-spacing: .8px; text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    padding: 12px 16px;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 12px 16px;
+    font-size: 13.5px;
+    vertical-align: middle;
+    border-color: var(--border);
+}
+
+.table tbody tr:hover { background: #f8fafc; }
+
+/* ---- BADGES ---- */
+.badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+.badge-active { background: #dcfce7; color: #16a34a; }
+.badge-inactive { background: #fee2e2; color: #dc2626; }
+.badge-warning { background: #fef3c7; color: #d97706; }
+.badge-info { background: #dbeafe; color: #2563eb; }
+.badge-admin { background: #ede9fe; color: #7c3aed; }
+.badge-pharmacist { background: #dcfce7; color: #16a34a; }
+.badge-cashier { background: #dbeafe; color: #2563eb; }
+
+/* ---- FORMS ---- */
+.form-control, .form-select {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    padding: 8px 12px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26,107,60,.12);
+}
+
+.form-label { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+
+/* ---- BUTTONS ---- */
+.btn-primary-custom {
+    background: var(--primary);
+    color: #fff; border: none;
+    padding: 9px 20px; border-radius: var(--radius-sm);
+    font-size: 13.5px; font-weight: 600;
+    cursor: pointer; transition: background .2s, transform .1s;
+    display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-primary-custom:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-accent {
+    background: var(--accent);
+    color: #fff; border: none;
+    padding: 9px 20px; border-radius: var(--radius-sm);
+    font-size: 13.5px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-accent:hover { background: #d4900a; }
+
+/* ---- ALERTS ---- */
+.custom-alert {
+    border: none; border-radius: var(--radius-sm);
+    font-size: 13.5px; font-weight: 500;
+}
+
+/* ---- POS ---- */
+.pos-item-row td { padding: 8px 12px !important; }
+
+.qty-btn {
+    width: 26px; height: 26px;
+    border-radius: 50%; border: 1.5px solid var(--border);
+    background: #fff; cursor: pointer;
+    font-size: 14px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all .15s; color: var(--text);
+}
+.qty-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.cart-total-row { font-size: 14px; font-weight: 500; }
+.cart-grand-total { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: var(--primary); }
+
+/* ---- MEDICINE SEARCH ---- */
+.medicine-search-results {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border: 1.5px solid var(--primary);
+    border-top: none; border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    max-height: 280px; overflow-y: auto;
+    z-index: 500; box-shadow: var(--shadow-lg);
+}
+
+.med-result-item {
+    padding: 10px 14px; cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: background .15s;
+}
+.med-result-item:hover { background: var(--primary-light); }
+.med-result-item .med-name { font-size: 14px; font-weight: 600; }
+.med-result-item .med-detail { font-size: 12px; color: var(--text-muted); }
+
+/* ---- PAGE HEADERS ---- */
+.page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+}
+
+.page-title { font-size: 22px; font-weight: 800; color: var(--text); }
+.page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* ---- EXPIRY ---- */
+.expiry-critical { background: #fff0f0 !important; }
+.expiry-warning { background: #fffbeb !important; }
+
+/* ---- INVOICE PRINT ---- */
+@media print {
+    .sidebar, .topbar, .no-print { display: none !important; }
+    .main-content { margin-left: 0 !important; }
+    .page-body { padding: 0 !important; }
+    .invoice-box { max-width: 100% !important; }
+}
+
+.invoice-box {
+    max-width: 720px; margin: 0 auto;
+    background: #fff; padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.invoice-header { border-bottom: 2px solid var(--primary); padding-bottom: 16px; margin-bottom: 20px; }
+.invoice-title { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; color: var(--primary); }
+
+/* ---- DASHBOARD CHARTS ---- */
+.chart-container { position: relative; height: 280px; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; }
+    .page-body { padding: 16px; }
+    .topbar { padding: 0 16px; }
+}
+
+/* ---- CREDIT FOOTER ---- */
+.credit-footer {
+    padding: 13px 24px;
+    border-top: 2px solid var(--border);
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    letter-spacing: 0.01em;
+}
+.credit-footer a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+.credit-footer a:hover {
+    background: rgba(var(--primary-rgb, 22,160,133), 0.08);
+    border-color: var(--primary);
+    text-decoration: none;
+}
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccd; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ---- MODAL ---- */
+.modal-header { background: var(--primary); color: #fff; border-radius: var(--radius) var(--radius) 0 0; }
+.modal-title { font-weight: 700; font-size: 16px; }
+.btn-close-white { filter: brightness(0) invert(1); }
+
+/* ---- STOCK INDICATOR ---- */
+.stock-low { color: var(--danger); font-weight: 600; }
+.stock-ok { color: #16a34a; font-weight: 600; }
