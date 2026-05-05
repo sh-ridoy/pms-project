@@ -3,7 +3,7 @@
     <div class="credit-footer">
         Designed &amp; Developed by <strong>Md Shamim Hossain Ridoy</strong>
         &nbsp;&mdash;&nbsp;
-        <a href="http://localhost/php_project_updated/files/PharmaCare_PMS_Ridoy/portfolio/index.php" target="_blank"><i class="bi bi-globe2"></i> View Portfolio</a>
+        <a href="http://localhost/portfolio/index.php" target="_blank"><i class="bi bi-globe2"></i> View Portfolio</a>
         &nbsp;|&nbsp;
         <a href="https://github.com/sh-ridoy" target="_blank"><i class="bi bi-github"></i> GitHub</a>
         &nbsp;|&nbsp;
