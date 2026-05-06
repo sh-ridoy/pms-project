@@ -11,6 +11,15 @@ $lowStock    = $conn->query("SELECT COUNT(*) c FROM medicines WHERE stock_qty <=
 $expiringSoon= $conn->query("SELECT COUNT(*) c FROM medicines WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 90 DAY) AND expiry_date >= CURDATE()")->fetch_assoc()['c'];
 $totalCustomers = $conn->query("SELECT COUNT(*) c FROM customers")->fetch_assoc()['c'];
 
+// Returns today
+$todayReturns = $conn->query("SELECT COUNT(*) c, COALESCE(SUM(refund_amount),0) t FROM returns WHERE DATE(return_date)=CURDATE() AND status='completed'")->fetch_assoc();
+
+// Month profit snapshot
+$monthRevenue = floatval($monthSales['t']);
+$monthCogs = floatval($conn->query("SELECT COALESCE(SUM(si.quantity * m.purchase_price),0) v FROM sale_items si JOIN medicines m ON si.medicine_id=m.id JOIN sales s ON si.sale_id=s.id WHERE MONTH(s.sale_date)=MONTH(CURDATE()) AND YEAR(s.sale_date)=YEAR(CURDATE())")->fetch_assoc()['v']);
+$monthRefunds = floatval($conn->query("SELECT COALESCE(SUM(refund_amount),0) v FROM returns WHERE MONTH(return_date)=MONTH(CURDATE()) AND YEAR(return_date)=YEAR(CURDATE()) AND status='completed'")->fetch_assoc()['v']);
+$monthProfit = $monthRevenue - $monthCogs - $monthRefunds;
+
 // Recent Sales
 $recentSales = $conn->query("SELECT s.*, c.name AS customer_name, u.full_name AS staff_name FROM sales s LEFT JOIN customers c ON s.customer_id=c.id LEFT JOIN users u ON s.user_id=u.id ORDER BY s.sale_date DESC LIMIT 8")->fetch_all(MYSQLI_ASSOC);
 
@@ -66,6 +75,34 @@ include '../includes/header.php';
             <div class="stat-value"><?= $expiringSoon ?></div>
             <div class="stat-label">Expiring Soon</div>
             <div class="stat-change text-muted"><?= $totalCustomers ?> customers</div>
+        </div>
+    </div>
+</div>
+
+<!-- Profit & Return Quick Row -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-4">
+        <div class="stat-card" style="--card-accent:<?= $monthProfit >= 0 ? '#16a34a' : '#e63946' ?>;--card-bg:<?= $monthProfit >= 0 ? '#dcfce7' : '#fee2e2' ?>;--card-color:<?= $monthProfit >= 0 ? '#16a34a' : '#e63946' ?>;">
+            <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
+            <div class="stat-value">৳<?= number_format(abs($monthProfit), 0) ?></div>
+            <div class="stat-label">This Month Profit <?= $monthProfit < 0 ? '(Loss)' : '' ?></div>
+            <div class="stat-change"><a href="profit_loss.php" style="color:inherit; text-decoration:none; font-size:11px;">View P&L →</a></div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card" style="--card-accent:#f0a500;--card-bg:#fff8e6;--card-color:#d4900a;">
+            <div class="stat-icon"><i class="bi bi-arrow-return-left"></i></div>
+            <div class="stat-value"><?= $todayReturns['c'] ?></div>
+            <div class="stat-label">Today's Returns</div>
+            <div class="stat-change text-muted">৳<?= number_format($todayReturns['t'], 0) ?> refunded</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="stat-card" style="--card-accent:#7c3aed;--card-bg:#f3f0ff;--card-color:#7c3aed;">
+            <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+            <div class="stat-value">৳<?= number_format($monthCogs, 0) ?></div>
+            <div class="stat-label">Month COGS</div>
+            <div class="stat-change text-muted">Cost of goods sold</div>
         </div>
     </div>
 </div>

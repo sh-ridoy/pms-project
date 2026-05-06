@@ -54,6 +54,9 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
         <a href="sales.php" class="nav-link <?= $currentPage === 'sales' ? 'active' : '' ?>">
             <i class="bi bi-receipt-cutoff"></i><span>Sales History</span>
         </a>
+        <a href="returns.php" class="nav-link <?= $currentPage === 'returns' ? 'active' : '' ?>">
+            <i class="bi bi-arrow-return-left"></i><span>Product Returns</span>
+        </a>
         <a href="customers.php" class="nav-link <?= $currentPage === 'customers' ? 'active' : '' ?>">
             <i class="bi bi-people-fill"></i><span>Customers</span>
         </a>
@@ -61,6 +64,9 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
         <div class="nav-section-label">REPORTS</div>
         <a href="reports.php" class="nav-link <?= $currentPage === 'reports' ? 'active' : '' ?>">
             <i class="bi bi-bar-chart-fill"></i><span>Reports</span>
+        </a>
+        <a href="profit_loss.php" class="nav-link <?= $currentPage === 'profit_loss' ? 'active' : '' ?>">
+            <i class="bi bi-graph-up-arrow"></i><span>Profit & Loss</span>
         </a>
         <a href="expiry.php" class="nav-link <?= $currentPage === 'expiry' ? 'active' : '' ?>">
             <i class="bi bi-exclamation-triangle-fill"></i><span>Expiry Alert</span>

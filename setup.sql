@@ -176,3 +176,35 @@ INSERT INTO customers (name, phone, address) VALUES
 ('Md. Abdullah', '01711111111', 'Mirpur, Dhaka'),
 ('Fatema Akter', '01811111111', 'Gulshan, Dhaka'),
 ('Hasan Ali', '01911111111', 'Mohammadpur, Dhaka');
+
+-- ============================================================
+-- MIGRATION: Returns Feature
+-- ============================================================
+
+-- Returns Table
+CREATE TABLE IF NOT EXISTS returns (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    invoice_no VARCHAR(20) NOT NULL UNIQUE,
+    sale_id INT NOT NULL,
+    user_id INT,
+    return_type ENUM('refund','exchange') DEFAULT 'refund',
+    reason TEXT,
+    refund_amount DECIMAL(10,2) DEFAULT 0.00,
+    status ENUM('completed','pending','cancelled') DEFAULT 'completed',
+    return_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Return Items Table
+CREATE TABLE IF NOT EXISTS return_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    return_id INT NOT NULL,
+    sale_item_id INT NOT NULL,
+    medicine_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (return_id) REFERENCES returns(id) ON DELETE CASCADE,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE
+);
