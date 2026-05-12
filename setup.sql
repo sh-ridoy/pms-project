@@ -196,6 +196,28 @@ CREATE TABLE IF NOT EXISTS returns (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- ============================================================
+-- MIGRATION: Supplier Returns Feature
+-- ============================================================
+
+-- Supplier Returns Table (Return to Company/Supplier)
+CREATE TABLE IF NOT EXISTS supplier_returns (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    invoice_no VARCHAR(20) NOT NULL UNIQUE,
+    supplier_id INT,
+    medicine_id INT NOT NULL,
+    user_id INT,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) DEFAULT 0.00,
+    total_amount DECIMAL(10,2) DEFAULT 0.00,
+    reason TEXT,
+    status ENUM('completed','pending') DEFAULT 'completed',
+    return_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE SET NULL,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
 -- Return Items Table
 CREATE TABLE IF NOT EXISTS return_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
