@@ -20,11 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
 
         $invoice = generateInvoice('RET');
+
+        // ✅ FIX: siissd = s(invoice) i(saleId) i(userId) s(returnType) s(reason) d(refundTotal) = 6টি
         $stmt = $conn->prepare("INSERT INTO returns (invoice_no, sale_id, user_id, return_type, reason, refund_amount, status) VALUES (?,?,?,?,?,?,'completed')");
-        $stmt->bind_param('ssisd', $invoice, $saleId, $userId, $returnType, $reason, $refundTotal);
+        $stmt->bind_param('siissd', $invoice, $saleId, $userId, $returnType, $reason, $refundTotal);
         $stmt->execute();
         $returnId = $conn->insert_id;
 
+        // ✅ FIX: iiiidd = i(returnId) i(saleItemId) i(medId) i(qty) d(unitPrice) d(totalP) = 6টি
         $ri  = $conn->prepare("INSERT INTO return_items (return_id, sale_item_id, medicine_id, quantity, unit_price, total_price) VALUES (?,?,?,?,?,?)");
         $upd = $conn->prepare("UPDATE medicines SET stock_qty = stock_qty + ? WHERE id = ?");
 
@@ -35,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $unitPrice  = floatval($item['unit_price']);
             $totalP     = $unitPrice * $qty;
 
-            $ri->bind_param('iiidd', $returnId, $saleItemId, $medId, $qty, $unitPrice, $totalP);
+            $ri->bind_param('iiiidd', $returnId, $saleItemId, $medId, $qty, $unitPrice, $totalP);
             $ri->execute();
 
             $upd->bind_param('ii', $qty, $medId);
@@ -82,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
         )");
 
+        // ✅ FIX: siiiidds = s(invoice) i(supplierId) i(medicineId) i(userId) i(qty) d(unitPrice) d(totalAmt) s(reason) = 8টি
         $stmt = $conn->prepare("INSERT INTO supplier_returns (invoice_no, supplier_id, medicine_id, user_id, quantity, unit_price, total_amount, reason) VALUES (?,?,?,?,?,?,?,?)");
         $stmt->bind_param('siiiidds', $invoice, $supplierId, $medicineId, $userId, $qty, $unitPrice, $totalAmt, $reason);
         $stmt->execute();
